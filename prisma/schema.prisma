@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Movie {
+  id Int @id @default(autoincrement())
+  title String
+  year Int
+  genre String
+  poster String
+  createdAt DateTime @default(now())
+  cast Person[]
+  reviews Review[]
+  awards Award[]
+  episodes Episode[]
+  type String
+}
+
+model Person {
+  id Int @id @default(autoincrement())
+  name String
+  age Int
+  type String
+  bio String @db.Text
+  awards Award[]
+  movies Movie[]
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+  rating Int
+  comment String @db.Text
+  movie Movie @relation(fields: [movieId], references: [id])
+  movieId Int
+  @@index([movieId])
+}
+
+model Award {
+  id Int @id @default(autoincrement())
+  name String
+  year Int
+  person Person @relation(fields: [personId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
+  movieId Int
+  personId Int
+  @@index([movieId])
+  @@index([personId])
+}
+
+model Episode {
+  id Int @id @default(autoincrement())
+  title String
+  year Int
+  poster String
+  movie Movie @relation(fields: [movieId], references: [id])
+  movieId Int
+  @@index([movieId])
+}
