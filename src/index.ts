@@ -4,6 +4,8 @@ import { swagger } from "@elysiajs/swagger";
 
 const setup = (app: Elysia) => app.decorate("db", new PrismaClient());
 
+const port = process.env.PORT || 3000;
+
 const app = new Elysia()
   // 🎬 Movie API routes 🎬
   .use(
@@ -136,7 +138,7 @@ const app = new Elysia()
           })
     );
   })
-  .listen(3000);
+  .listen(port);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
