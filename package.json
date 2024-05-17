@@ -3,7 +3,8 @@
   "version": "1.0.28",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma": "dotenv -e .env.local -- prisma migrate dev && prisma db seed",
+    "prisma:dev": "dotenv -e .env.local -- prisma migrate dev && prisma db seed",
+    "prisma:prod": "prisma migrate deploy",
     "dev": "bun run --hot src/index.ts",
     "start": "bun run src/index.ts"
   },
