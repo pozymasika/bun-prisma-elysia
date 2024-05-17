@@ -84,48 +84,57 @@ const app = new Elysia()
       );
   })
   .group("/title/:id", (app) => {
-    return app
-      .get("/", async ({ params, db }) => {
-        return db.movie.findUnique({
-          where: {
-            id: parseInt(params.id, 10),
-          },
-        });
-      })
-      .get("/episodes", async ({ params, db }) => {
-        return db.movie.findMany({
-          where: {
-            movieId: parseInt(params.id, 10),
-          },
-        });
-      })
-      .get("/cast", async ({ params, db }) => {
-        return db.person.findMany({
-          where: {
-            movies: {
-              some: {
+    return app.guard(
+      {
+        schema: {
+          params: t.Object({
+            id: t.String(),
+          }),
+        },
+      },
+      (app) =>
+        app
+          .get("/", async ({ params, db }) => {
+            return db.movie.findUnique({
+              where: {
                 id: parseInt(params.id, 10),
               },
-            },
-          },
-        });
-      })
-      .get("/reviews", async ({ params, db }) => {
-        return db.review.findMany({
-          where: {
-            movieId: parseInt(params.id, 10),
-          },
-        });
-      })
-      .get("/awards", async ({ params, db }) => {
-        return db.award.findMany({
-          where: {
-            movieId: parseInt(params.id, 10),
-          },
-        });
-      });
+            });
+          })
+          .get("/episodes", async ({ params, db }) => {
+            return db.episode.findMany({
+              where: {
+                movieId: parseInt(params.id, 10),
+              },
+            });
+          })
+          .get("/cast", async ({ params, db }) => {
+            return db.person.findMany({
+              where: {
+                movies: {
+                  some: {
+                    id: parseInt(params.id, 10),
+                  },
+                },
+              },
+            });
+          })
+          .get("/reviews", async ({ params, db }) => {
+            return db.review.findMany({
+              where: {
+                movieId: parseInt(params.id, 10),
+              },
+            });
+          })
+          .get("/awards", async ({ params, db }) => {
+            return db.award.findMany({
+              where: {
+                movieId: parseInt(params.id, 10),
+              },
+            });
+          })
+    );
   })
-
   .listen(3000);
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
