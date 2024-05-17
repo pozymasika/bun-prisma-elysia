@@ -4,6 +4,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate:dev": "dotenv -e .env.local -- prisma migrate dev",
+    "migrate:prod": "dotenv -e .env.local -- prisma migrate deploy",
     "start": "bun run src/index.ts",
     "dev": "bun run --hot src/index.ts"
   },
