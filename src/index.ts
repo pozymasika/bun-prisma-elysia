@@ -12,6 +12,7 @@ const app = new Elysia()
     })
   )
   .use(setup)
+  .get("/", () => "Welcome to Elysia, go to /search to start searching")
   .group("/search", (app) => {
     return app
       .get("/", async ({ query, db }) => db.movie.findMany())
