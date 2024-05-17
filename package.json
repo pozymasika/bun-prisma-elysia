@@ -3,12 +3,12 @@
   "version": "1.0.28",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma": "prisma migrate dev && prisma db seed",
+    "prisma": "dotenv -e .env.local -- prisma migrate dev && prisma db seed",
     "dev": "bun run --hot src/index.ts",
     "start": "bun run src/index.ts"
   },
   "prisma": {
-    "seed": "node scripts/seed.js"
+    "seed": "dotenv -e .env.local -- node scripts/seed.js"
   },
   "dependencies": {
     "@elysiajs/swagger": "^0.3.0",
@@ -17,7 +17,8 @@
     "prisma": "^4.11.0"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "dotenv-cli": "^7.4.2"
   },
   "module": "src/index.js"
 }
