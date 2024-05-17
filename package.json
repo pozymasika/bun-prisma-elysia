@@ -15,7 +15,8 @@
     "prisma": "^4.11.0"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "dotenv-cli": "^7.4.2"
   },
   "module": "src/index.js"
 }
